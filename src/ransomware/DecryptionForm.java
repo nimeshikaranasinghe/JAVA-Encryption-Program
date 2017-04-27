@@ -13,6 +13,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 
@@ -25,12 +26,26 @@ public class DecryptionForm extends javax.swing.JFrame {
         initComponents();
         lbl_about.setVisible(false);
         lbl_close.setVisible(false);
+        
+        if (folderPath == null) {
+            txt_path.setEditable(true);
+            btn_select.setEnabled(true);
+        }
     }
     
     public DecryptionForm(String pfolderPath) {
         initComponents();
         lbl_about.setVisible(false);
         lbl_close.setVisible(false);
+        
+        if (folderPath == null) {
+            txt_path.setEditable(true);
+            btn_select.setEnabled(true);
+        }
+        
+        txt_path.setText(pfolderPath);
+        txt_path.setEditable(false);
+        btn_select.setEnabled(false);
         
         folderPath = pfolderPath;
         
@@ -61,6 +76,9 @@ public class DecryptionForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_key = new javax.swing.JTextField();
         btn_decrypt = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txt_path = new javax.swing.JTextField();
+        btn_select = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -186,7 +204,7 @@ public class DecryptionForm extends javax.swing.JFrame {
         jLabel3.setText("Enter key :");
         jLabel3.setToolTipText("");
         jPanel5.add(jLabel3);
-        jLabel3.setBounds(40, 40, 110, 30);
+        jLabel3.setBounds(10, 130, 110, 30);
 
         txt_key.setFont(new java.awt.Font("Leelawadee UI", 0, 16)); // NOI18N
         txt_key.setFocusCycleRoot(true);
@@ -196,7 +214,7 @@ public class DecryptionForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(txt_key);
-        txt_key.setBounds(160, 40, 410, 30);
+        txt_key.setBounds(130, 130, 440, 30);
 
         btn_decrypt.setBackground(new java.awt.Color(29, 96, 229));
         btn_decrypt.setFont(new java.awt.Font("Leelawadee UI", 0, 16)); // NOI18N
@@ -220,21 +238,62 @@ public class DecryptionForm extends javax.swing.JFrame {
             }
         });
         jPanel5.add(btn_decrypt);
-        btn_decrypt.setBounds(240, 110, 110, 50);
+        btn_decrypt.setBounds(240, 180, 130, 40);
 
-        jLabel6.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
-        jLabel6.setText("*****Search for the passwordFile.txt in previously selected directory to find the decryption key");
-        jLabel6.setToolTipText("");
-        jPanel5.add(jLabel6);
-        jLabel6.setBounds(10, 190, 580, 40);
+        jLabel7.setFont(new java.awt.Font("Leelawadee UI", 0, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("File Path  :");
+        jLabel7.setToolTipText("");
+        jPanel5.add(jLabel7);
+        jLabel7.setBounds(10, 30, 140, 30);
+
+        txt_path.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        txt_path.setFocusCycleRoot(true);
+        txt_path.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_pathActionPerformed(evt);
+            }
+        });
+        jPanel5.add(txt_path);
+        txt_path.setBounds(130, 30, 440, 30);
+
+        btn_select.setBackground(new java.awt.Color(29, 96, 229));
+        btn_select.setFont(new java.awt.Font("Leelawadee UI", 0, 16)); // NOI18N
+        btn_select.setForeground(new java.awt.Color(255, 255, 255));
+        btn_select.setText("Select Folder");
+        btn_select.setBorderPainted(false);
+        btn_select.setContentAreaFilled(false);
+        btn_select.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_select.setOpaque(true);
+        btn_select.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_selectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_selectMouseExited(evt);
+            }
+        });
+        btn_select.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_selectActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btn_select);
+        btn_select.setBounds(240, 70, 130, 40);
 
         jPanel1.add(jPanel5);
         jPanel5.setBounds(0, 50, 600, 230);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 600, 280);
+        jLabel6.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
+        jLabel6.setText("*****Search for the passwordFile.txt in previously selected directory to find the decryption key");
+        jLabel6.setToolTipText("");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(10, 280, 580, 40);
 
-        setSize(new java.awt.Dimension(600, 280));
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 600, 320);
+
+        setSize(new java.awt.Dimension(600, 322));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -436,6 +495,42 @@ public class DecryptionForm extends javax.swing.JFrame {
                
     }//GEN-LAST:event_btn_decryptActionPerformed
 
+    private void txt_pathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pathActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_pathActionPerformed
+
+    private void btn_selectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_selectMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_selectMouseEntered
+
+    private void btn_selectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_selectMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_selectMouseExited
+
+    private void btn_selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selectActionPerformed
+
+        JFileChooser fileChooser = new JFileChooser();
+        //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setCurrentDirectory(new java.io.File("."));         //set the dialog box initial folder to current directory
+        int result = fileChooser.showOpenDialog(this);
+
+        fileChooser.setDialogTitle("Choose a Folder");                  //set name to JFileChooser dialog box
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            System.out.println("getCurrentDirectory(): " + fileChooser.getCurrentDirectory());
+            folderPath = fileChooser.getSelectedFile().getAbsolutePath();               //get the selected folder's absolute path
+            txt_path.setText(folderPath);
+            System.out.println("Folder Path = " + folderPath);
+
+        }
+        else {
+            System.out.println("No Selection ");
+        }
+
+    }//GEN-LAST:event_btn_selectActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -474,11 +569,13 @@ public class DecryptionForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_decrypt;
+    private javax.swing.JButton btn_select;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -489,5 +586,6 @@ public class DecryptionForm extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_closepic;
     private javax.swing.JTextField txt_key;
+    private javax.swing.JTextField txt_path;
     // End of variables declaration//GEN-END:variables
 }
