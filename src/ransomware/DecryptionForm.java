@@ -373,7 +373,8 @@ public class DecryptionForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Enter the a valid DECRYPTION KEY!", "Error!", JOptionPane.ERROR_MESSAGE);
                 txt_key.setText("");
             }            
-            else{ //**************file Dencryption part*******************
+            else{ 
+                //**************file Dencryption part*******************
                 //********************************************************
                 
                 //-----search for the .des files in the user selected directory---------
@@ -466,10 +467,20 @@ public class DecryptionForm extends javax.swing.JFrame {
             
                 //-----delete .des file---------------------------------------
                 boolean fdelete = new File(folderPath + "\\" + filename).delete();
-
                 if (fdelete) {
                     System.out.println("file deleted");
                 }
+                //delete salt file
+                fdelete = new File(folderPath + "\\salt.enc").delete();
+                if (fdelete) {
+                    System.out.println("salt deleted");
+                }
+                //delete iv file
+                fdelete = new File(folderPath + "\\iv.enc").delete();
+                if (fdelete) {
+                    System.out.println("iv deleted");
+                }
+                
 
                 //********decryption done******************
                 
