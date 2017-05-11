@@ -13,7 +13,7 @@ This project is done using netbeans 8.1 IDE
 Java version 8 update 60 or above is needed to run this application.
 
 Instructions to set up locally
-==================================
+-------------------------------
 
 1. Download the project using this link https://github.com/nimeshikaranasinghe/JAVA-Encryption-Program/tree/Ransomware
 2. Extract it
